@@ -81,6 +81,16 @@ class Preview extends RelativeLayout implements SurfaceHolder.Callback {
       mCamera.setParameters(parameters);
     }
   }
+
+  private int customRotation = 0;
+  public void setCameraRotation(int rotation) {
+    customRotation = rotation;
+  }
+
+  public int getCameraRotation() {
+    return customRotation;
+  }
+
   private void setCameraDisplayOrientation() {
     Camera.CameraInfo info = new Camera.CameraInfo();
     int rotation = ((Activity) getContext()).getWindowManager().getDefaultDisplay().getRotation();
@@ -115,7 +125,7 @@ class Preview extends RelativeLayout implements SurfaceHolder.Callback {
     Log.d(TAG, "screen is rotated " + degrees + "deg from natural");
     Log.d(TAG, (info.facing == Camera.CameraInfo.CAMERA_FACING_FRONT ? "front" : "back") + " camera is oriented -" + info.orientation + "deg from natural");
     Log.d(TAG, "need to rotate preview " + displayOrientation + "deg");
-    mCamera.setDisplayOrientation(displayOrientation);
+    mCamera.setDisplayOrientation(displayOrientation + customRotation);
   }
 
   public void switchCamera(Camera camera, int cameraId) {

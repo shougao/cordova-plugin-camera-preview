@@ -86,6 +86,7 @@ public class CameraActivity extends Fragment {
   public int height;
   public int x;
   public int y;
+  public int customRotation = 0;
 
   public void setEventListener(CameraPreviewListener listener){
     eventListener = listener;
@@ -272,6 +273,7 @@ public class CameraActivity extends Fragment {
 
     cameraCurrentlyLocked = defaultCameraId;
 
+    mPreview.setCameraRotation(customRotation);
     if(mPreview.mPreviewSize == null){
       mPreview.setCamera(mCamera, cameraCurrentlyLocked);
       eventListener.onCameraStarted();
@@ -549,7 +551,7 @@ public class CameraActivity extends Fragment {
             params.setJpegQuality(quality);
           }
 
-          params.setRotation(mPreview.getDisplayOrientation());
+          params.setRotation(mPreview.getDisplayOrientation() + mPreview.getCameraRotation());
 
           mCamera.setParameters(params);
           mCamera.takePicture(shutterCallback, null, jpegPictureCallback);
